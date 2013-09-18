@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: root
+
+two:
+  name: psetter
+  
+three:
+  name: g_user

@@ -1,0 +1,40 @@
+<%= form_for @problem, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @problem.errors.any? %>
+    <div id="error_explanation">
+      
+      <h3 class="text-error">The problem can't be create</h3>
+      <h4 class="text-error"> <%= pluralize(@exercise.errors.count, "error") %> </h4>
+      <ul>
+      <% @problem.errors.full_messages.each do |msg| %>
+        <li class="text-error"><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :pdescription, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :pdescription, :class => 'file_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :notes, :class => 'text_area' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                problems_path, :class => 'btn' %>
+  </div>
+<% end %>

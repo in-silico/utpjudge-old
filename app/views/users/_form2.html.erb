@@ -1,0 +1,59 @@
+<%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h3 class="text-error"><%= pluralize(@user.errors.count, "error") %> prohibited this submission from being saved:</h3>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li class="text-error"><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.email_field :email, :autofocus => true %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :code, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :code, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password, :class => 'password_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :confirm_password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation, :class => 'password_field' %>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :roles, :class => 'control-label' %>
+    <div class="controls">
+        <% for r in Role.all  %>
+            <%= check_box_tag 'user[roles][]', r.id, @user.role_ids.include?(r.id), :id => dom_id(r) %>
+            <%= label_tag dom_id(r), r.name %>
+        <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                users_path, :class => 'btn' %>
+  </div>
+<% end %>

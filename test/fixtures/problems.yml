@@ -1,0 +1,8 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+ptroilo:
+  name: Troilo
+  description: Sumar dos numeros
+  notes: Este es muy fácil
+
+
