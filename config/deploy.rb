@@ -1,8 +1,6 @@
 set :scm, :git
 set :application, "utpjudge"
-set :repository,  "https://github.com/sebasutp/utpjudge.git"
-set :branch, "merging"
-set :subdir, "judge"
+set :repository,  "https://github.com/in-silico/utpjudge.git"
 set :user, "root"
 set :password, "judge"
 set :deploy_to, "/home/judge/test/#{application}"
@@ -32,7 +30,7 @@ after "deploy:bundle_gems", "deploy:restart"
 
 namespace :deploy do
   task :bundle_gems do
-    run "cd #{deploy_to}/current && /usr/local/rvm/bin/bundle install vendor/gems"
+    run "cd #{deploy_to}/current && /usr/local/rvm/gems/ruby-2.0.0-p247@global/bin/bundle install vendor/gems"
   end
   task :start do ; end
   task :stop do ; end
