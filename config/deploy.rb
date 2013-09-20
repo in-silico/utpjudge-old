@@ -1,11 +1,11 @@
 set :scm, :git
 set :application, "utpjudge"
 set :repository,  "https://github.com/in-silico/utpjudge.git"
-set :user, "root"
+#set :user, "root"
 set :password, "judge"
-set :deploy_to, "/home/judge/test/#{application}"
+set :deploy_to, "/var/www/apps/#{application}"
 #set :deploy_via, :remote_cache
-
+set :use_sudo, false
 set :rvm_type, :system
 
 require 'rvm/capistrano'
@@ -36,6 +36,10 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+
+  task :seed do
+    run "cd #{deploy_to}/current && /usr/local/rvm/gems/ruby-2.0.0-p247@global/bin/rake RAILS_ENV=production db:seed"
   end
  
 end
