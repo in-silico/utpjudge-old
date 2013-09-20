@@ -14,8 +14,8 @@ control_c(){
 
 trap control_c SIGINT
 
-PATH_BOT=../judgebot
-PATH_SERVER=../judge
+PATH_BOT=judgebot/
+PATH_SERVER=./
 
 cd $PATH_BOT
 echo "Rising $PATH_BOT/ruby_srv ... "

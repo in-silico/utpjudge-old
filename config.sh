@@ -12,7 +12,7 @@ fi
 COMMNAME=safeexec
 basename=utpjudgejail
 homejail=/home/$basename
-PATH_BOT=../judgebot
+PATH_BOT=judgebot
 DISTRIB_CODENAME=testing
 PRUN=RUNS
 
