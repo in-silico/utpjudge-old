@@ -16,3 +16,4 @@ rerun.txt
 pickle-email-*.html
 judgebot/files/*
 protected/*
+Gemfile.lock
