@@ -43,6 +43,6 @@ gem 'httmultiparty'
 # Deploy with Capistrano
 gem 'capistrano'
 gem 'rvm-capistrano'
-
+gem 'executable-hooks'
 # To use debugger
 # gem 'ruby-debug'
