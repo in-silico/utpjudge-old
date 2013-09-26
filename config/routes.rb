@@ -8,6 +8,7 @@ Judge::Application.routes.draw do
   resources :submissions do
       collection do
           get :downloadInput
+          get :pending
           put :jupload
           post :testerbot 
       end

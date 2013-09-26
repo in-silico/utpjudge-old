@@ -1,7 +1,7 @@
 class SubmissionsController < ApplicationController
   before_filter :req_psetter, :only=>[:destroy,:update,:edit]
   before_filter :req_gen_user, :except=>[:destroy,:update,:edit,:judgebot,:bot_testcase,:update_veredict,:testerbot]
-  http_basic_authenticate_with :name => "user", :password => "password", :only => [:judgebot,:bot_testcase,:update_veredict]
+  http_basic_authenticate_with :name => "user", :password => "password", :only => [:judgebot,:bot_testcase,:update_veredict,:pending]
 
   # GET /submissions
   # GET /submissions.json
@@ -45,6 +45,7 @@ class SubmissionsController < ApplicationController
   end
 
   #GET /submissions/1/judgebot.json (Called by judge)
+  # Download the submission identified by the given ID (params[:id])
   def judgebot
       @submission = Submission.find(params[:id])
       @srccode = @submission.source
@@ -71,11 +72,20 @@ class SubmissionsController < ApplicationController
   end
 
   #GET /submissions/1/bot_testcase.json (Called by judge)
+  # Used to download testcases by the judgebot 
   def bot_testcase
       @submission = Submission.find(params[:id])
             
       respond_to do |format|
           format.json { render json: @submission.get_test_cases }
+      end
+  end
+
+  #GET /submissions/pending.json
+  def pending
+      @pend_ids = Submission.where(:veredict => 'Judging').pluck(:id)
+      respond_to do |format|
+          format.json { render json: @pend_ids }
       end
   end
 
@@ -195,7 +205,8 @@ class SubmissionsController < ApplicationController
   # PUT /submissions/1.json
   def update
     @submission = Submission.find(params[:id])
-
+    
+    @submission.veredict = params[:veredict]
     respond_to do |format|
       if @submission.update_attributes(params[:submission])
         format.html { redirect_to @submission, notice: 'Submission was successfully updated.' }

@@ -23,7 +23,7 @@ class Submission < ActiveRecord::Base
     return s
   end
 
-	## Code to judge uploadSource
+    ## Code to judge uploadSource
   def self.newJudgeSource(exercise_problem)
     s = Submission.new
     s.init_date = DateTime.now
@@ -67,45 +67,43 @@ class Submission < ActiveRecord::Base
       ofile2 = outfile.path
       self.time = self.end_date - self.init_date
       if self.time > self.exercise_problem.time_limit
-      	self.veredict = 'TL'
+        self.veredict = 'TL'
       else
-			if file_exist? ofile2
-				s = %x{bash djudge.sh #{ofile1} #{ofile2}}
-				self.veredict = s.split.last 
-			end
+            if file_exist? ofile2
+                s = %x{bash djudge.sh #{ofile1} #{ofile2}}
+                self.veredict = s.split.last 
+            end
       end
   end
 
-	def judgeUpload(tc)
+  def judgeUpload(tc)
     lan = self.language
     exp = self.exercise_problem
     timl = exp.prog_limit
     meml = exp.mem_lim
-		ofile = tc.outfile.path
-		ifile = tc.infile.path
-		sfile = srcfile.path
-		
-		comp = lan.compilation.gsub("SOURCE","Main")
-		exec = lan.execution.gsub("SOURCE","Main").gsub("-tTL","-t"+timl.to_s).gsub("ML",meml.to_s).gsub("INFILE","Main.in")
-		#tl = timl
-		#ml = meml
-		type = lan.ltype
+    ofile = tc.outfile.path
+    ifile = tc.infile.path
+    sfile = srcfile.path
+    
+    comp = lan.compilation.gsub("SOURCE","Main")
+    exec = lan.execution.gsub("SOURCE","Main").gsub("-tTL","-t"+timl.to_s).gsub("ML",meml.to_s).gsub("INFILE","Main.in")
+    #tl = timl
+    #ml = meml
+    type = lan.ltype
     self.veredict = "Judging"
 
-		if file_exist? sfile
-		  #Tell server that a new submission arrived
-		  
-		  require 'socket'
-      s = TCPSocket.new 'localhost', 3010
+    if file_exist? sfile
+       #Tell server that a new submission arrived       
+      require 'socket'
+      #s = TCPSocket.new 'localhost', 3010
       subm = self.id.to_s
-      s.puts subm
-      s.close
-		  
+      #s.puts subm
+      #s.close          
       #s = %x{sudo -u utpjudjail /home/insilico/utpjudge/judge/sjudge.sh #{sfile} #{ifile} #{ofile} #{type} '#{comp}' '#{exec}' #{timl} #{meml}}
-			#self.veredict = s
+            #self.veredict = s
       #save      
-		end
-	end
+    end
+  end
 
   def source
       srcf = srcfile.path
