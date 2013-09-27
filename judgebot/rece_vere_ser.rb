@@ -11,8 +11,9 @@ end
 
 class RVeredict
 
-  def initialize()
-    @base_uri = 'http://localhost:3000'
+  def initialize(ip,port)
+    @base_uri = 'http://' + ip + ':' + port
+    puts @base_uri
     @data = open("test_fifo", "r+")
   end
 
@@ -21,7 +22,7 @@ class RVeredict
       loop do
           v = @data.gets
           ver = v.split(",")
-          puts "Receiving veredict=#{v}"
+          %x{ echo "Receiving veredict=#{v}" >> judgebot.log}
           ur = "#{@base_uri}/submissions/#{ver[0]}/update_veredict.json"
           response = SConsumer.get(ur,:query => { :veredict => ver[1], :time => ver[2] })
 
@@ -29,5 +30,8 @@ class RVeredict
   end
 end
 
-rv = RVeredict.new
+ip = "#{ARGV[0]}"
+port = "#{ARGV[1]}"
+
+rv = RVeredict.new(ip,port)
 rv.run_rv

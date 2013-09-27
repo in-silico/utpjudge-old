@@ -13,9 +13,11 @@ end
 
 class SJudge
 
-  def initialize()
-    @base_uri = 'http://localhost:3000'
+  def initialize(ip,port,time)
+    @base_uri = 'http://' + ip + ':'+port
     @folder = 'files'
+    @time = time.to_i
+    puts @base_uri
   end
   
   def write_to_file(fname,str)
@@ -29,6 +31,7 @@ class SJudge
     base_path = @folder + "/" + base_name
     srcname = @submission["srcfile_file_name"]
 
+    %x{#{"rm -rf #{base_path}"}}
     %x{#{"mkdir #{base_path}"}}
     %x{#{"chmod 777 -R #{base_path}"}}
 
@@ -75,27 +78,32 @@ class SJudge
   end
 
   def run_server()
-      port = 3010
-      server = TCPServer.new port
+#      port = 3010
+#      server = TCPServer.new port
       @testcases = {}
-
+      puts @time
       loop {
-#         Thread.start(server.accept) do |client|
-            client = server.accept
-            s = client.gets
-            puts "Receiving submission id=#{s}"
-            v = process_subm(s.to_i)
-            fifo = open("test_fifo", "w+")
-            fifo.puts v
-            fifo.flush
-            client.close
-#       end
+        s = "#{@base_uri}/submissions/pending.json"
+        subms = SConsumer.get(s)
+        sleep @time
+      
+        for s in subms
+          %x{echo "Judging submission id=#{s}" >> judgebot.log}
+          v = process_subm(s.to_i)
+          fifo = open("test_fifo", "w+")
+          fifo.puts v
+          fifo.flush
+        end
       }
   end
 
 end
 
+# Get from arguments ip and port
+ip   = "#{ARGV[0]}"
+port = "#{ARGV[1]}"
+time = "#{ARGV[2]}"
 
 #The actual server launch
-server = SJudge.new
+server = SJudge.new(ip,port,time)
 server.run_server

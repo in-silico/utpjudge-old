@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_filter :req_psetter, :only=>[:destroy,:update,:edit]
-  before_filter :req_gen_user, :except=>[:destroy,:update,:edit,:judgebot,:bot_testcase,:update_veredict,:testerbot]
+  before_filter :req_gen_user, :except=>[:destroy,:update,:edit,:judgebot,:bot_testcase,:update_veredict,:testerbot,:pending]
   http_basic_authenticate_with :name => "user", :password => "password", :only => [:judgebot,:bot_testcase,:update_veredict,:pending]
 
   # GET /submissions
