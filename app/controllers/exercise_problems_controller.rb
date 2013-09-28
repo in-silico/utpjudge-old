@@ -4,6 +4,9 @@ class ExerciseProblemsController < ApplicationController
     def show
       @exercise_problem = ExerciseProblem.find(params[:id])
       @problem = @exercise_problem.problem
+      if !(@current_user.valid_exercise? @exercise_problem.exercise)
+        redirect_to :root, :notice => "You can't see this contest"
+      end
     end
     
     def create
