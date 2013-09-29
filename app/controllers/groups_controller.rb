@@ -3,8 +3,10 @@ class GroupsController < ApplicationController
   before_filter :req_root, :only=>:index
   before_filter :match_user, :except => [:index, :new, :create,:list_groups , :add_user_confirm]
 
-  def match_user
-    group = Group.find(params[:id])
+  def match_user(group=nil)
+    if(group==nil)
+      group = Group.find(params[:id])
+    end
     auth = @current_user && @current_user.id==group.owner
     return unauthorized_user unless auth
   end
