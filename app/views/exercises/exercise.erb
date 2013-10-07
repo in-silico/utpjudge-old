@@ -13,7 +13,7 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
     <% @problems.each_with_index do |problem, i| %>
       <th>
         <% if @exercise.current? or @exercise.finished? %>
-          <%= link_to "#{problem.problem.name}".html_safe, [@exercise,problem] %>
+          <%= link_to "#{@exercise.letter_for_problem(problem)} - #{problem.problem.name}".html_safe, [@exercise,problem] %>
         <% else %>
           <%= @exercise.letter_for_problem(problem) %>
         <% end %>
@@ -27,7 +27,7 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
     <tr>
       <td><%= i + 1 %></td>
       <td><%= user.name %></td>
-      <% @exercise.exercise_problems.each_with_index do |ex_problem,j| %>
+      <% @problems.each_with_index do |ex_problem,j| %>
             
             <td <%if @exercise.number_of_tries(user,ex_problem) >= 1 %>
                   <% if @exercise.problem_solved?(user,ex_problem) %>

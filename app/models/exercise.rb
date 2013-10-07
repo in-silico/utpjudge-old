@@ -99,8 +99,8 @@ class Exercise < ActiveRecord::Base
   end
   
   def letter_for_problem(ex_problem)
-    exercise_problems.each_with_index do |p, i|
-      return ('A'.ord + i).chr if p == problem
+    exercise_problems.order(:problem_number).each_with_index do |p, i|
+      return ('A'.ord + i).chr if p == ex_problem
     end
     return '~'
   end
