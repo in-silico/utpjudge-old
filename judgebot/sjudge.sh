@@ -31,7 +31,7 @@ echo "" >> $folder/$slog
 commname=`which safeexec`
 
 # User to judging
-basename=utp
+basename=_utpjudge
 #SRUN=/usr/bin/$COMMNAME
 
 if [ ! -x $commname ]; then
@@ -153,16 +153,16 @@ if [ "$TYPE" == "1" ]; then
   cd $frun 2>> $slog;
 
   # Applying limits
-  ulimit -t $CT
+  #ulimit -t $CT
 
   echo "Compiling .. $COMPILATION" >> $slog;
-  eval $COMPILATION 2>> $slog;	#Compilation
+  timelimit -t$CT -T$CT $COMPILATION &>> $slog;	#Compilation
 
   if [ $? == 0 ]; then
     echo "Executing .." >> $slog;
     echo "Command: $EXECUTION" >> $slog;
 
-    #/usr/bin/time -f "%E %M" -a -o $slog $EXECUTION 2>> $slog
+#    echo -n "@" >> $slog;/usr/bin/time -f "%E %M" -a -o $slog $EXECUTION 2>> $slog
     $EXECUTION 2>> $slog
     echo $? > run.retcode
     chmod 700 run.retcode

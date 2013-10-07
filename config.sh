@@ -10,7 +10,7 @@ if [ "`id -u`" != "0" ]; then
 fi
 
 COMMNAME=safeexec
-basename=utpjudgejail
+basename=_utpjudge
 homejail=/home/$basename
 PATH_BOT=judgebot
 DISTRIB_CODENAME=testing
@@ -50,6 +50,19 @@ chmod 777 $PATH_BOT/files
 echo "Creating fifo: $PATH_BOT/test_fifo";
 mkfifo $PATH_BOT/test_fifo
 chmod 700 $PATH_BOT/test_fifo
+
+echo "Creating user and group to jail: $basename, g$basename ...";
+# To create user and group to jail
+id -u $basename >/dev/null 2>/dev/null;	# If user does not exist then will be created
+if [ $? != 0 ]; then
+	groupadd g$basename;
+	useradd -m -s /bin/bash -d $homejail -g g$basename $basename;
+	if [ $? != 0 ]; then
+		echo "Failed to create user $basename";
+		exit;
+	fi
+fi
+echo "done!";
 
 # If jail is not necessary.
 if [ $# == 0 ]; then
