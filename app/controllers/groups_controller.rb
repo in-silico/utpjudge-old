@@ -9,6 +9,7 @@ class GroupsController < ApplicationController
     end
     auth = @current_user && @current_user.id==group.owner
     return unauthorized_user unless auth
+    return true
   end
   
   # GET /groups

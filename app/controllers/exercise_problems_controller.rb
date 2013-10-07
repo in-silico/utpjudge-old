@@ -25,6 +25,12 @@ class ExerciseProblemsController < ApplicationController
         redirect_to exercise_path(@exercise)
     end
 
+    def rejudge
+        ep = ExerciseProblem.find(params[:id])
+        ep.rejudge
+        redirect_to exercise_path(ep.exercise), :notice => "Rejudging the problem for this contest"
+    end
+
   def download
     ep = ExerciseProblem.find(params[:id])
     problem = ep.problem

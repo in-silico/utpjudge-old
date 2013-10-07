@@ -40,6 +40,7 @@ Judge::Application.routes.draw do
       resources :exercise_problems do
         member do
           get :download
+          get :rejudge
         end
       end
       member do
