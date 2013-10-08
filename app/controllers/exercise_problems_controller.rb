@@ -28,6 +28,7 @@ class ExerciseProblemsController < ApplicationController
     def rejudge
         ep = ExerciseProblem.find(params[:id])
         ep.rejudge
+        flash[:class] = "alert alert-success"
         redirect_to exercise_path(ep.exercise), :notice => "Rejudging the problem for this contest"
     end
 

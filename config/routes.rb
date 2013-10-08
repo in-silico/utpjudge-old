@@ -35,6 +35,7 @@ Judge::Application.routes.draw do
   match 'listexercises' => 'exercises#getvalid'
   match 'listgroups' => 'groups#list_groups'
   match 'admin' => 'static_pages#admin'
+  match 'info' => 'static_pages#info'
   match 'exercise/:id' => 'exercises#exercise'
   resources :exercises do
       resources :exercise_problems do

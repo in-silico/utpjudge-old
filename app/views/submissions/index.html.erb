@@ -26,7 +26,11 @@
         <td><%= submission.exercise_problem.exercise.name %></td>
         <td><%= submission.exercise_problem.problem.name %></td>
         <td><%= submission.time %></td>
-        <td><%= submission.veredict %></td>
+        <% if submission.veredict == "Judging" %>
+            <td> Pending </td>
+        <% else %>
+            <td><%= submission.veredict %></td>
+        <% end %>
         <td>
           <% if @current_user.has_roles(User.roles[:psetter]) %>
             <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
