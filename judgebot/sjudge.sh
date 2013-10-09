@@ -207,7 +207,7 @@ elif [ "$TYPE" == "2" ]; then
   chmod 700 correct.OUT
 
   echo "Change directory to $frun" >> $slog;
-  cd $frun
+  #cd $frun
 
   echo "Executing .." >> $slog;
   echo "Command: $EXECUTION" >> $slog;
