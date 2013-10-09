@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  before_filter :req_psetter, :except=>[:home]
+  before_filter :req_psetter, :except=>[:home,:info]
   
   def admin
     if session[:user_id]
