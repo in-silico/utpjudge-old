@@ -51,8 +51,8 @@ PL=$9
 RTL=30
 # Max number of child process
 CP=0
-# Max compilation time (in seconds) (1 minute by default)
-CT=60
+# Max compilation time (in seconds) (30 seconds by default)
+CT=30
 
 
 cd $folder
@@ -211,7 +211,7 @@ elif [ "$TYPE" == "2" ]; then
 
   echo "Executing .." >> $slog;
   echo "Command: $EXECUTION" >> $slog;
-  eval $EXECUTION
+  eval $EXECUTION &>> $slog;
   echo $? > run.retcode 
   chmod 700 run.retcode
 fi;
