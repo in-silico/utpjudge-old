@@ -1,6 +1,20 @@
 class UsersController < ApplicationController
   before_filter :req_root, :only=>[:index,:destroy,:update,:edit]
-  
+  before_filter :req_auth_user, :only=>[:show]
+
+  # GET /users
+  # GET /users.json
+
+  def req_auth_user    
+    @user = User.find(params[:id])
+    if @current_user == @user or @current_user.has_roles([1,2])
+      return true
+    else
+      redirect_to(:root, :notice => "You don't have permissions to perform this operation")
+      return false
+    end
+  end
+
   # GET /users
   # GET /users.json
   
