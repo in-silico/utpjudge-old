@@ -30,7 +30,7 @@ lang.save
 lang = Language.new
 lang.name="Java"
 lang.ltype="1"
-lang.compilation="/usr/bin/javac -d . SOURCE.java 2>SOURCE.ERR"
+lang.compilation="/usr/bin/javac -d . SOURCE.java"
 lang.execution="SRUN -tTL -TRTL -iINFILE -F256 -u256 -oSOURCE.OUT -eSOURCE.ERR -Ujailu -Gjailg -n0 -C. -f20000 -d1000000 -m1000000 -- /usr/bin/java -Xmx120M -Xms120M SOURCE"
 lang.save
 
