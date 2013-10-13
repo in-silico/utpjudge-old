@@ -18,3 +18,5 @@ judgebot/files/*
 protected/*
 Gemfile.lock
 *.log
+data
+pids

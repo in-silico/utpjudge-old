@@ -10,12 +10,11 @@ Judge::Application.routes.draw do
           get :downloadInput
           get :pending
           put :jupload
-          post :testerbot 
       end
       member do
         get :judgebot
         get :bot_testcase
-        get :update_veredict # to update veredict
+        get :update_veredict
         put :jdownload
       end
   end

@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_filter :req_psetter, :only=>[:destroy,:update,:edit]
-  before_filter :req_gen_user, :except=>[:destroy,:update,:edit,:judgebot,:bot_testcase,:update_veredict,:testerbot,:pending]
+  before_filter :req_gen_user, :except=>[:destroy,:update,:edit,:judgebot,:bot_testcase,:update_veredict,:pending]
   http_basic_authenticate_with :name => "user", :password => "password", :only => [:judgebot,:bot_testcase,:update_veredict,:pending]
 
   # GET /submissions
@@ -53,22 +53,6 @@ class SubmissionsController < ApplicationController
       respond_to do |format|
           format.json { render json: [@submission,@srccode,@lang,@submission.exercise_problem] }
       end
-  end
-
-  #POST /submission/testerbot.json
-  def testerbot
-    @exercise_problem = ExerciseProblem.find(params[:exercise_problem_id])
-    @submission = Submission.newJudgeSource(@exercise_problem)
-    @submission.language = Language.find(params[:language_id])
-    @submission.end_date = DateTime.now
-    @submission.user_id = User.all(:conditions => {:email => 'testerbot@utp.edu.co'})[0].id
-    @submission.save
-
-    respond_to do |format|
-      if @submission.update_attributes(params[:submission]) && @submission.judge
-        format.json { render json: [@submission] }
-      end
-    end
   end
 
   #GET /submissions/1/bot_testcase.json (Called by judge)
