@@ -24,8 +24,12 @@ class RVeredict
           ver = v.split(",")
           %x{ echo "Receiving veredict=#{v}" >> judgebot.log}
           ur = "#{@base_uri}/submissions/#{ver[0]}/update_veredict.json"
-          response = SConsumer.get(ur,:query => { :veredict => ver[1], :time => ver[2] })
-
+          begin
+            response = SConsumer.get(ur,:query => { :veredict => ver[1], :time => ver[2] })
+          rescue Exception => e
+            %x{echo "`date` \n\t  (#{$0}) - #{e.message}\n" >> judgebot.log}
+            false
+          end
       end
   end
 end

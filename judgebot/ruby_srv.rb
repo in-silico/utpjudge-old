@@ -78,22 +78,29 @@ class SJudge
   end
 
   def run_server()
-#      port = 3010
-#      server = TCPServer.new port
       @testcases = {}
       puts @time
       loop {
         s = "#{@base_uri}/submissions/pending.json"
-        subms = SConsumer.get(s)
-        sleep @time
-      
-        for s in subms
-          %x{echo "Judging submission id=#{s}" >> judgebot.log}
-          v = process_subm(s.to_i)
-          fifo = open("test_fifo", "w+")
-          fifo.puts v
-          fifo.flush
-        end
+
+        begin
+          subms = SConsumer.get(s)
+          
+          for s in subms
+            %x{echo "Judging submission id=#{s}" >> judgebot.log}
+            v = process_subm(s.to_i)
+            fifo = open("test_fifo", "w+")
+            fifo.puts v
+            fifo.flush
+          end
+
+          sleep @time
+
+        rescue Exception => e
+          %x{echo "`date` \n\t (#{$0}) - #{e.message}\n" >> judgebot.log}
+          sleep @time
+          false
+        end        
       }
   end
 
