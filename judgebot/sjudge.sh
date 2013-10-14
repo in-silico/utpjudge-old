@@ -261,4 +261,7 @@ fi;
 
 # Running time
 echo -n ","
-awk '$1 == "*" {print $2}' $slog
+if [ "$ret" != "3" ];then
+  awk '$1 == "*" {print $2}' $slog;
+else echo $TL;
+fi
