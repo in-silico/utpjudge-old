@@ -157,9 +157,10 @@ class Exercise < ActiveRecord::Base
     if @contestants[usr].data[pblm].time_solved < 0
       @contestants[usr].data[pblm].attempts += 1
       if submission.veredict == "YES"
-        @contestants[usr].data[pblm].time_solved = ((Time.parse(submission.end_date.to_s(:db)) - Time.parse(from_date.to_s(:db))) / 60).to_i
+        ts = ((Time.parse(submission.end_date.to_s(:db)) - Time.parse(from_date.to_s(:db))) / 60).to_i
+        @contestants[usr].data[pblm].time_solved = ts
         @contestants[usr].problems_solved += 1
-        @contestants[usr].penalty += (  @contestants[usr].data[pblm].attempts - 1)*20 + submission.time.to_i
+        @contestants[usr].penalty += (  @contestants[usr].data[pblm].attempts - 1)*20 + ts
       end
     end
   end
