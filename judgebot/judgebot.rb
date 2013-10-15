@@ -53,7 +53,7 @@ class SJudge
     tc_id = @submission["testcase_id"]
     
     if !(@testcases.has_key? tc_id)
-      @testcases[tc_id] = tc = SConsumer.get("#{@base_uri}/submissions/#{sub_id}/bot_testcase.json")
+      @testcases[tc_id] = tc = SConsumer.new(@user,@pass).get("#{@base_uri}/submissions/#{sub_id}/bot_testcase.json")
     else
       tc = @testcases[tc_id]
       #puts tc
