@@ -8,16 +8,28 @@ require "uri"
 class SConsumer
   include HTTParty
   format :json
-  basic_auth 'user', 'password'
+
+  def initialize(user, pass)
+    @auth = {:username => user, :password => pass}
+  end
+
+  def get(ur)
+    options = { :basic_auth => @auth }
+    self.class.get(ur,options)
+  end
+
 end
 
 class SJudge
 
-  def initialize(ip,port,time)
+  def initialize(ip,port,time,user,pass)
     @base_uri = 'http://' + ip + ':'+port
     @folder = 'files'
     @time = time.to_i
-    puts @base_uri
+    @user = user
+    @pass = pass
+    @log = "judgebot.log"
+    %x{echo "#{@base_uri}\n" >> #{@log}}
   end
   
   def write_to_file(fname,str)
@@ -48,7 +60,6 @@ class SJudge
     end
     write_to_file "#{base_path}/#{tc_id}.in",tc[0]
     write_to_file "#{base_path}/#{tc_id}.out",tc[1]
-
     
     type = @language["ltype"]
     comp = @language["compilation"]
@@ -63,14 +74,11 @@ class SJudge
     s = %x{#{command}}.split(',')
     ans = sub_id.to_s + "," + s[0].to_s + "," + s[1].to_s
     return ans
-    
-#   ur = "#{@base_uri}/submissions/#{sub_id}/update_veredict.json"
-#   response = SConsumer.get(ur,:query => { :veredict => s, :time => time })
   end
 
   def process_subm(subm_id)
     s = "#{@base_uri}/submissions/#{subm_id}/judgebot.json"
-    response = SConsumer.get(s)
+    response = SConsumer.new(@user,@pass).get(s)
     @submission = response[0]
     @src_code = response[1]
     @language = response[2]
@@ -79,22 +87,30 @@ class SJudge
   end
 
   def run_server()
-#      port = 3010
-#      server = TCPServer.new port
       @testcases = {}
-      puts @time
+      %x{echo "#{@time}" >> #{@log}}
       loop {
         s = "#{@base_uri}/submissions/pending.json"
-        subms = SConsumer.get(s)
-        sleep @time
-      
-        for s in subms
-          %x{echo "Judging submission id=#{s}" >> judgebot.log}
-          v = process_subm(s.to_i)
-          fifo = open("test_fifo", "w+")
-          fifo.puts v
-          fifo.flush
-        end
+
+        begin
+          subms = SConsumer.new(@user,@pass).get(s)
+          
+          for s in subms
+            %x{echo "Judging submission id=#{s}" >> #{@log}}
+            v = process_subm(s.to_i)
+            %x{echo "#{v}" >> #{@log}}
+            fifo = open("test_fifo", "w+")
+            fifo.puts v
+            fifo.flush
+          end
+
+          sleep @time
+
+        rescue Exception => e
+          %x{echo "`date` \n\t (#{$0}) - #{e.message}\n" >> #{@log}}
+          sleep @time
+          false
+        end        
       }
   end
 
@@ -104,7 +120,9 @@ end
 ip   = "#{ARGV[0]}"
 port = "#{ARGV[1]}"
 time = "#{ARGV[2]}"
+user = "#{ARGV[3]}"
+pass = "#{ARGV[4]}"
 
 #The actual server launch
-server = SJudge.new(ip,port,time)
+server = SJudge.new(ip,port,time,user,pass)
 server.run_server

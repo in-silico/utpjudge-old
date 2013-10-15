@@ -149,8 +149,8 @@ if [ "$TYPE" == "1" ]; then
   cp $OUTFILE correct.OUT 2>> $slog;
   chmod 700 correct.OUT
 
-  echo "Change directory to $frun" >> $slog;
-  cd $frun 2>> $slog;
+  #echo "Change directory to $frun" >> $slog;
+  #cd $frun 2>> $slog;
 
   # Applying limits
   #ulimit -t $CT
@@ -206,7 +206,7 @@ elif [ "$TYPE" == "2" ]; then
   cp $OUTFILE correct.OUT 2>> $slog
   chmod 700 correct.OUT
 
-  echo "Change directory to $frun" >> $slog;
+  #echo "Change directory to $frun" >> $slog;
   #cd $frun
 
   echo "Executing .." >> $slog;
@@ -217,7 +217,6 @@ elif [ "$TYPE" == "2" ]; then
 fi;
 
 ret=`cat run.retcode`
-#echo "** $ret" >> $slog
 
 if [ "$ret" == "0" ]; then
   # This presentation error only checks white spaces and newlines
@@ -262,4 +261,7 @@ fi;
 
 # Running time
 echo -n ","
-awk '$1 == "*" {print $2}' $slog
+if [ "$ret" != "3" ];then
+  awk '$1 == "*" {print $2}' $slog;
+else echo $TL;
+fi
