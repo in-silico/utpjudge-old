@@ -52,15 +52,14 @@ class SJudge
     sub_id = @submission["id"]
     tc_id = @submission["testcase_id"]
     
-#    if !(@testcases.has_key? tc_id)
-      s = "#{@base_uri}/submissions/#{sub_id}/bot_testcase.json"
-      @testcases[tc_id] = tc = SConsumer.new(@user,@pass).get(s)
-      write_to_file "#{base_path}/#{tc_id}.in",tc[0]
-      write_to_file "#{base_path}/#{tc_id}.out",tc[1]
-#    else
-#      tc = @testcases[tc_id]
-#     puts tc
-#    end    
+    if !(@testcases.has_key? tc_id)
+      @testcases[tc_id] = tc = SConsumer.new(@user,@pass).get("#{@base_uri}/submissions/#{sub_id}/bot_testcase.json")
+    else
+      tc = @testcases[tc_id]
+      #puts tc
+    end
+    write_to_file "#{base_path}/#{tc_id}.in",tc[0]
+    write_to_file "#{base_path}/#{tc_id}.out",tc[1]
     
     type = @language["ltype"]
     comp = @language["compilation"]
