@@ -43,6 +43,7 @@ class ExercisesController < ApplicationController
   def exercise
     @exercise = Exercise.find(params[:id])
     @problems = @exercise.exercise_problems.order(:problem_number)
+    @submissions = @exercise.submissions
     if @current_user.valid_exercise? @exercise
       respond_to do |format|
           if(!@exercise.current?)

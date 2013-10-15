@@ -15,7 +15,7 @@ class Submission < ActiveRecord::Base
 
   def self.newJudgeDownload(exercise_problem)
     s = Submission.new
-    s.init_date = DateTime.now
+    s.init_date = Time.now.to_s(:db)
     s.exercise_problem = exercise_problem
     s.veredict = 'TL'
     testcases = exercise_problem.problem.testcases.where(:jtype => exercise_problem.stype)
@@ -26,7 +26,7 @@ class Submission < ActiveRecord::Base
     ## Code to judge uploadSource
   def self.newJudgeSource(exercise_problem)
     s = Submission.new
-    s.init_date = DateTime.now
+    s.init_date = Time.now.to_s(:db)
     s.exercise_problem = exercise_problem
     s.veredict = 'Judging'
     testcases = exercise_problem.problem.testcases.where(:jtype => exercise_problem.stype)

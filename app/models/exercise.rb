@@ -108,5 +108,72 @@ class Exercise < ActiveRecord::Base
   def within_contest_time_lapse?(some_time)
     start_date <= some_time and some_time <= end_date
   end
+
+######################## Cambios ######################
+
+  attr_accessor :contestants
+
+=begin  
+  def initialize
+    @contestants = Hash.new
+  end
+=end  
+  class Contestant
+    attr_accessor :data , :name, :penalty, :problems_solved
+    
+    def initialize(name)
+      @name = name
+      @data = Hash.new
+      @penalty = 0
+      @problems_solved = 0
+    end
+    
+    
+  end
   
+  class Pdata
+    attr_accessor :attempts , :time_solved
+    
+    def initialize
+      @attempts = 0
+      @time_solved = -1
+    end
+  end
+  
+  def update_submission(submission)
+    if @contestants == nil
+      @contestants = Hash.new
+    end
+    usr  = submission.user.id
+    pblm = submission.exercise_problem.id
+    if @contestants[usr] == nil
+      @contestants[usr] = Exercise::Contestant.new(submission.user.name)
+    end
+    
+    if @contestants[usr].data[pblm] == nil
+      @contestants[usr].data[pblm] = Exercise::Pdata.new
+    end
+    
+    if @contestants[usr].data[pblm].time_solved < 0
+      @contestants[usr].data[pblm].attempts += 1
+      if submission.veredict == "YES"
+        @contestants[usr].data[pblm].time_solved = ((Time.parse(submission.end_date.to_s(:db)) - Time.parse(from_date.to_s(:db))) / 60).to_i
+        @contestants[usr].problems_solved += 1
+        @contestants[usr].penalty = (  @contestants[usr].data[pblm].attempts - 1)*20 + submission.time.to_i
+      end
+    end
+  end
+  
+  def init_scoreboard
+    @contestants = Hash.new
+    
+    self.users.each do |u|
+      @contestants[u.id] = Exercise::Contestant.new(u.name)
+    end
+  end
+  
+  def scoreboard
+    @contestants.sort_by { |user_id, user | [user.problems_solved, -user.penalty] }.reverse
+  end
+
 end

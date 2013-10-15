@@ -115,7 +115,7 @@ class SubmissionsController < ApplicationController
 
   def jdownload
      @submission = Submission.find(params[:id])
-     @submission.end_date = DateTime.now
+     @submission.end_date = Time.now.to_s(:db)
      
      if @submission.user.valid_exercise? @submission.exercise_problem.exercise
         respond_to do |format|
@@ -139,7 +139,7 @@ class SubmissionsController < ApplicationController
     @exercise_problem = ExerciseProblem.find(params[:exercise_problem_id])
     @submission = Submission.newJudgeSource(@exercise_problem)
     @submission.language = Language.find(params[:language_id])
-    @submission.end_date = DateTime.now
+    @submission.end_date = Time.now.to_s(:db)
     @submission.user = current_user
     @submission.save
 

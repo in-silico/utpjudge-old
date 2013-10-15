@@ -23,36 +23,45 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
     <th>Penalty</th>
   </tr>
 
-  <% @exercise.users_sorted_by_score.each_with_index do |user, i| %>
+  <% @exercise.init_scoreboard %>
+  <% @submissions.each do |s| %>
+   <% @exercise.update_submission(s) %>
+  <% end %>
+   
+  <% @exercise.scoreboard.each_with_index do |user, i| %>
     <tr>
       <td><%= i + 1 %></td>
-      <td><%= user.name %></td>
+      <td><%= user[1].name %></td>
       <% @problems.each_with_index do |ex_problem,j| %>
             
-            <td <%if @exercise.number_of_tries(user,ex_problem) >= 1 %>
-                  <% if @exercise.problem_solved?(user,ex_problem) %>
+            <td 
+                <% if @exercise.contestants[user[0]].data[ex_problem.id] %> 
+                                    
+                  <% if @exercise.contestants[user[0]].data[ex_problem.id].attempts > 0 %>
+                    <% if @exercise.contestants[user[0]].data[ex_problem.id].time_solved >= 0 %>
                       style = "background : #4CC417" 
-                  <% else %>
-                      style = "background : #f62817" 
-                  <% end %>              
-                <% end %> >
+                    <% else %>
+                      style = "background : #f62817"
+                    <% end %>
+                  <% end %> >
 
-                <%if @exercise.number_of_tries(user,ex_problem) >= 1 %>
-                  <% if @exercise.problem_solved?(user,ex_problem) %>
-                      <%= @exercise.wrong_tries_before_solution(user, ex_problem) + 1 %> / <%= @exercise.time_of_first_solution(user, ex_problem) %>
+                  <%= @exercise.contestants[user[0]].data[ex_problem.id].attempts %> /
+                  <% if @exercise.contestants[user[0]].data[ex_problem.id].time_solved >= 0 %>
+                    <%= @exercise.contestants[user[0]].data[ex_problem.id].time_solved %>
                   <% else %>
-                      <%= @exercise.number_of_tries(user, ex_problem) %> / <%= @exercise.time_of_first_solution(user, ex_problem) %>
-                  <% end %>              
-                <% end %> 
-                               
+                    0
+                  <% end %>                          
+                <% end %>
+             
+             
           </td>
       <% end %>
-      <td><%= @exercise.number_of_solved_problems(user) %></td>
-      <td><%= @exercise.total_penalty(user) %></td>
+      <td><%= user[1].problems_solved %></td>
+      <td><%= user[1].penalty %></td>
     </tr>
   <% end %>
 </table>
 
 <script>
-  setTimeout("location.reload()", 30000);
+  setTimeout("location.reload()", 600000);
 </script>
