@@ -8,34 +8,34 @@ UTP judge is an online judge created by In-silico for programming assignments an
 
 1 - Install necesary packages.
 
-  # apt-get install curl git sudo g++ gcc libstdc++6 sharutils openjdk-6-jdk openjdk-6-jre openjdk-7-jdk openjdk-7-jre python nodejs timelimit
+    # apt-get install curl git sudo g++ gcc libstdc++6 sharutils openjdk-6-jdk openjdk-6-jre openjdk-7-jdk openjdk-7-jre python nodejs timelimit
 
 2 - Install ruby and  rails
 
-  $ \curl -L https://get.rvm.io | bash -s stable --ruby --rails
-  # echo "source /usr/local/rvm/scripts/rvm" >> /etc/bash.bashrc
-  $ source /etc/bash.bashrc
+    $ \curl -L https://get.rvm.io | bash -s stable --ruby --rails
+    # echo "source /usr/local/rvm/scripts/rvm" >> /etc/bash.bashrc
+    $ source /etc/bash.bashrc
 
 3 - Download the UTP Judge
 
-  $ git clone https://github.com/in-silico/utpjudge.git
+    $ git clone https://github.com/in-silico/utpjudge.git
 
 4 - Base configuration
 
-  $ cd utpjudge/
-  # ./config.sh  
-  # rm Gemfile.lock
-  # bundle install
+    $ cd utpjudge/
+    # ./config.sh  
+    # rm Gemfile.lock
+    # bundle install
 
 5 - Capistrano 
  
-   Modify the file ./config/deploy.rb to specific configuration, by default the app will be to: /var/www/apps/YOUR-SITE (Make sure that provide the necesary permissions to the user -Non root user-).
+Modify the file ./config/deploy.rb to specific configuration, by default the app will be to: /var/www/apps/YOUR-SITE (Make sure that provide the necesary permissions to the user -Non root user-).
 
-   $ bundle exec cap deploy:setup
-   $ bundle exec cap deploy:check
-   $ bundle exec cap deploy 
-   $ bundle exec cap deploy:migrate
-   $ bundle exec cap deploy:seed
+    $ bundle exec cap deploy:setup
+    $ bundle exec cap deploy:check
+    $ bundle exec cap deploy 
+    $ bundle exec cap deploy:migrate
+    $ bundle exec cap deploy:seed
 
 6 - Config the server (apache)
 
@@ -55,11 +55,11 @@ UTP judge is an online judge created by In-silico for programming assignments an
      
   - Enable the  'mod_rewrite' for apache:
   
-    #  a2enmod rewrite
+      #  a2enmod rewrite
 
   - Create the virtual host for apache in "/etc/apache2/sites-available/"
 	
-    # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
+      # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
 
 	Example.
 
@@ -74,15 +74,15 @@ UTP judge is an online judge created by In-silico for programming assignments an
 
   - Enable the site (Note that must have the same name that the previous file)
 	
-    #  a2ensite YOUR-SITE
+      # a2ensite YOUR-SITE
 
   - Config apache to run in localhost (if is your case)
     
-    # echo "ServerName localhost" >> /etc/apache2/apache2.conf
+      # echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
   - Restart the apache server. 
 	  
-    # service apache2 restart
+      # service apache2 restart
 
 
 7 - Upload the problems
