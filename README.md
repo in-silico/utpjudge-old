@@ -54,12 +54,14 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
   These lines must be added to file "/etc/apache2/apache2.conf"
      
   - Enable the  'mod_rewrite' for apache:
+
   
-    #  a2enmod rewrite
+      # a2enmod rewrite
 
   - Create the virtual host for apache in "/etc/apache2/sites-available/"
 	
-    # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
+
+      # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
 
 	Example.
 
