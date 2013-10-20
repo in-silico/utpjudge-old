@@ -55,11 +55,11 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
      
   - Enable the  'mod_rewrite' for apache:
   
-      #  a2enmod rewrite
+    #  a2enmod rewrite
 
   - Create the virtual host for apache in "/etc/apache2/sites-available/"
 	
-      # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
+    # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
 
 	Example.
 
@@ -74,15 +74,15 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
 
   - Enable the site (Note that must have the same name that the previous file)
 	
-      # a2ensite YOUR-SITE
+    # a2ensite YOUR-SITE
 
   - Config apache to run in localhost (if is your case)
     
-      # echo "ServerName localhost" >> /etc/apache2/apache2.conf
+    # echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
   - Restart the apache server. 
 	  
-      # service apache2 restart
+    # service apache2 restart
 
 
 7 - Upload the problems
