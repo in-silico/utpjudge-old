@@ -46,45 +46,43 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
 
 6.2 Configuration
 
-  When the previous step is completed, you will obtain a message like this:
-	"LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
-	 PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
- 	 PassengerRuby /usr/bin/ruby1.8"
+When the previous step is completed, you will obtain a message like this:
+
+    "LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
+     PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
+     PassengerRuby /usr/bin/ruby1.8"
   
-  These lines must be added to file "/etc/apache2/apache2.conf"
+These lines must be added to file "/etc/apache2/apache2.conf"
      
-  - Enable the  'mod_rewrite' for apache:
+6.2.1 Enable the  mod_rewrite for apache
 
-  
-      # a2enmod rewrite
+    # a2enmod rewrite
 
-  - Create the virtual host for apache in "/etc/apache2/sites-available/"
-	
+6.2.2 Create the virtual host for apache in "/etc/apache2/sites-available/"
 
-      # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
+    # your_awesome_editor /etc/apache2/sites-available/YOUR-SITE.conf
 
-	Example.
+Example.
 
-		<VirtualHost *:80>
-		    # Change these 3 lines to suit your project
-		    #RailsEnv development
-		    RailsEnv production
-		    ServerName 192.168.1.5 # Debe ser la ip real
-		    DocumentRoot /your_path/public # Note the 'public' directory
-		</VirtualHost>
+    <VirtualHost *:80>
+        # Change these 3 lines to suit your project
+        #RailsEnv development
+        RailsEnv production
+        ServerName 192.168.1.5 # Debe ser la ip real
+        DocumentRoot /your_path/public # Note the 'public' directory
+     </VirtualHost>
 
 
-  - Enable the site (Note that must have the same name that the previous file)
-	
+6.2.3 Enable the site (Note that must have the same name that the previous file)
+
     # a2ensite YOUR-SITE
 
-  - Config apache to run in localhost (if is your case)
-    
+6.2.4 Config apache to run in localhost (if is your case)
+
     # echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-  - Restart the apache server. 
-	  
-    # service apache2 restart
+6.2.5 Restart the apache server
 
+    # service apache2 restart
 
 7 - Upload the problems
