@@ -48,9 +48,11 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
 
 When the previous step is completed, you will obtain a message like this:
 
-    "LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
-     PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
-     PassengerRuby /usr/bin/ruby1.8"
+   >> LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
+   
+   >> PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
+   
+   >> PassengerRuby /usr/bin/ruby1.8
   
 These lines must be added to file "/etc/apache2/apache2.conf"
      
