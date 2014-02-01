@@ -1,6 +1,6 @@
 The order of tasks is unrelated with the priority.
 
-- [*] Make a "Task to do" file.
+- [x] Make a "Task to do" file.
 - [ ] Blog entries and comments (Forum).
 - [ ] Special judge,
 - [ ] GUI to admin languajes and compilation options.
