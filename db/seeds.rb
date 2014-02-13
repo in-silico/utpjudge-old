@@ -23,7 +23,7 @@ lang.save
 lang = Language.new
 lang.name="ANSI C"
 lang.ltype="1"
-lang.compilation="/usr/bin/gcc -Wall -O2 -static -pipe -o SOURCE SOURCE.c"
+lang.compilation="/usr/bin/gcc -lmath -Wall -O2 -static -pipe -o SOURCE SOURCE.c"
 lang.execution="SRUN -uCP -F10 -tTL -Ujailu -Gjailg -iINFILE -oSOURCE.OUT -eSOURCE.ERR -n0 -C. -f20000 -d512000 -mML ./SOURCE"
 lang.save
 
