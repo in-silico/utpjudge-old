@@ -2,14 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.8'
 
-gem 'rb-readline'
+gem 'rb-readline', '~> 0.5.1'
 gem 'will_paginate', '>= 3.0.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-gem 'json'
+gem 'sqlite3', '~> 1.3.8'
+gem 'json', '~> 1.8.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -22,15 +22,15 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
-  gem 'less-rails'
-  gem 'therubyracer'
-  gem 'twitter-bootstrap-rails'
+  gem 'less-rails', '~> 2.4.2'
+  gem 'therubyracer', '~> 0.12.1'
+  gem 'twitter-bootstrap-rails', '~> 2.2.8'
 end
 
-gem 'jquery-rails'
-gem 'paperclip'
-gem 'httparty'
-gem 'httmultiparty'
+gem 'jquery-rails' , '~> 3.1.0'
+gem 'paperclip' , '~> 4.1.0'
+gem 'httparty' , '~> 0.12.0'
+gem 'httmultiparty' , '~> 0.3.10'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -41,8 +41,8 @@ gem 'httmultiparty'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
-gem 'rvm-capistrano'
-gem 'executable-hooks'
+gem 'capistrano', '~> 3.1.0'
+gem 'rvm-capistrano', '~> 1.5.1'
+gem 'executable-hooks', '~> 1.3.1'
 # To use debugger
 # gem 'ruby-debug'
