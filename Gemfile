@@ -41,8 +41,8 @@ gem 'httmultiparty' , '~> 0.3.10'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano', '~> 3.1.0'
 gem 'rvm-capistrano', '~> 1.5.1'
+gem 'capistrano', '~> 2.15.0'
 gem 'executable-hooks', '~> 1.3.1'
 # To use debugger
 # gem 'ruby-debug'
