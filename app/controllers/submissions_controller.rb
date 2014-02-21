@@ -16,13 +16,13 @@ class SubmissionsController < ApplicationController
     else
       @submissions = Submission.paginate(:page => params[:page], :per_page => 5).order('created_at DESC')
     end
-      
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @submissions }
     end
   end
-  
+
 
   # GET /submissions/1
   # GET /submissions/1.json
@@ -50,16 +50,19 @@ class SubmissionsController < ApplicationController
       @submission = Submission.find(params[:id])
       @srccode = @submission.source
       @lang = @submission.language
+      tmp = File.open('protected/checkers/' + @submission.exercise_problem.problem.checker.url.split('?')[0], 'r')
+      @checker = tmp.read
+      @chlang  = @submission.exercise_problem.problem.chlang
       respond_to do |format|
-          format.json { render json: [@submission,@srccode,@lang,@submission.exercise_problem] }
+          format.json { render json: [@submission,@srccode,@lang,@submission.exercise_problem, @checker, @chlang] }
       end
   end
 
   #GET /submissions/1/bot_testcase.json (Called by judge)
-  # Used to download testcases by the judgebot 
+  # Used to download testcases by the judgebot
   def bot_testcase
       @submission = Submission.find(params[:id])
-            
+
       respond_to do |format|
           format.json { render json: @submission.get_test_cases }
       end
@@ -116,7 +119,7 @@ class SubmissionsController < ApplicationController
   def jdownload
      @submission = Submission.find(params[:id])
      @submission.end_date = Time.now.to_s(:db)
-     
+
      if @submission.user.valid_exercise? @submission.exercise_problem.exercise
         respond_to do |format|
           if @submission.update_attributes(params[:submission]) && @submission.judge
@@ -143,7 +146,7 @@ class SubmissionsController < ApplicationController
     @submission.user = current_user
     @submission.save
 
-    respond_to do |format|      
+    respond_to do |format|
       if @submission.update_attributes(params[:submission]) && @submission.judge
         #if success redirect to show action
         flash[:class] = "alert alert-success"
@@ -189,7 +192,7 @@ class SubmissionsController < ApplicationController
   # PUT /submissions/1.json
   def update
     @submission = Submission.find(params[:id])
-    
+
     @submission.veredict = params[:veredict]
     respond_to do |format|
       if @submission.update_attributes(params[:submission])

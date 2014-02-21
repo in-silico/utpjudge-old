@@ -73,10 +73,15 @@ ActiveRecord::Schema.define(:version => 20130423212638) do
     t.string   "name"
     t.text     "description"
     t.text     "notes"
+    t.text     "chlang"
     t.string   "pdescription_file_name"
     t.string   "pdescription_content_type"
     t.integer  "pdescription_file_size"
     t.datetime "pdescription_updated_at"
+    t.string   "checker_file_name"
+    t.string   "checker_content_type"
+    t.integer  "checker_file_size"
+    t.datetime "checker_updated_at"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end

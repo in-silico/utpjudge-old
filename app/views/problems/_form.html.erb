@@ -1,9 +1,9 @@
-<%= form_for @problem, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @problem, :html => { :class => 'form-horizontal', :multipart=>true } do |f| %>
   <% if @problem.errors.any? %>
     <div id="error_explanation">
-      
+
       <h3 class="text-error">The problem can't be create</h3>
-      <h4 class="text-error"> <%= pluralize(@exercise.errors.count, "error") %> </h4>
+      <h4 class="text-error"> <%= pluralize(@problem.errors.count, "error") %> </h4>
       <ul>
       <% @problem.errors.full_messages.each do |msg| %>
         <li class="text-error"><%= msg %></li>
@@ -11,7 +11,7 @@
       </ul>
     </div>
   <% end %>
-  
+
 
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
@@ -31,6 +31,22 @@
       <%= f.text_area :notes, :class => 'text_area' %>
     </div>
   </div>
+
+
+  <div class="control-group">
+    <%= f.label :checker, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.file_field :checker %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :chlang, :class => 'control-label'%>
+    <div class="controls">
+      <%= f.select :chlang, ['cpp','java','py'] %>
+    </div>
+  </div>
+
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>

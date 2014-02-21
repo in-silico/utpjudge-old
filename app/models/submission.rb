@@ -12,6 +12,8 @@ class Submission < ActiveRecord::Base
   #validates_attachment_presence :src_file
   validates_attachment_size :srcfile, :less_than => 1.megabytes
   validates_attachment_size :outfile, :less_than => 20.megabytes
+  validates_attachment_content_type :srcfile, :content_type => /\A*/
+  validates_attachment_content_type :outfile, :content_type => /\A*/
 
   def self.newJudgeDownload(exercise_problem)
     s = Submission.new
@@ -71,7 +73,7 @@ class Submission < ActiveRecord::Base
       else
             if file_exist? ofile2
                 s = %x{bash djudge.sh #{ofile1} #{ofile2}}
-                self.veredict = s.split.last 
+                self.veredict = s.split.last
             end
       end
   end
@@ -84,7 +86,7 @@ class Submission < ActiveRecord::Base
     ofile = tc.outfile.path
     ifile = tc.infile.path
     sfile = srcfile.path
-    
+
     comp = lan.compilation.gsub("SOURCE","Main")
     exec = lan.execution.gsub("SOURCE","Main").gsub("-tTL","-t"+timl.to_s).gsub("ML",meml.to_s).gsub("INFILE","Main.in")
     #tl = timl
@@ -93,15 +95,15 @@ class Submission < ActiveRecord::Base
     self.veredict = "Judging"
 
     if file_exist? sfile
-       #Tell server that a new submission arrived       
+       #Tell server that a new submission arrived
       require 'socket'
       #s = TCPSocket.new 'localhost', 3010
       subm = self.id.to_s
       #s.puts subm
-      #s.close          
+      #s.close
       #s = %x{sudo -u utpjudjail /home/insilico/utpjudge/judge/sjudge.sh #{sfile} #{ifile} #{ofile} #{type} '#{comp}' '#{exec}' #{timl} #{meml}}
             #self.veredict = s
-      #save      
+      #save
     end
   end
 
@@ -114,7 +116,7 @@ class Submission < ActiveRecord::Base
       end
       return "No source code"
   end
-  
+
   def get_test_cases
     tc = self.testcase
     in_file = tc.infile.path

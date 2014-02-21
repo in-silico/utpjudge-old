@@ -12,7 +12,7 @@ class ExercisesController < ApplicationController
   end
 
   def getvalid
-      if(@current_user)      
+      if(@current_user)
         mios = @current_user.valid_exercises
         @exercises = mios.where("exercises.from_date <= :cdate and \
         exercises.to_date >= :cdate",{:cdate =>  DateTime.now.to_s(:db)})
@@ -26,7 +26,7 @@ class ExercisesController < ApplicationController
   def add_user
     exer = Exercise.find(params[:id])
     user = User.find(params[:user])
-    
+
     if(exer.groups & user.groups)
       if !exer.users.where(:id => user.id).first
         exer.users << user
@@ -36,7 +36,7 @@ class ExercisesController < ApplicationController
       end
     else
         render :text => "You don't have permissions to perform this operation"
-    end 
+    end
 
   end
 
@@ -49,7 +49,7 @@ class ExercisesController < ApplicationController
           if(!@exercise.current?)
              format.html { redirect_to :root, :notice => 'the contest is not running' }
           else
-             format.html 
+             format.html
           end
       end
     else
@@ -62,7 +62,7 @@ class ExercisesController < ApplicationController
   def show
     @exercise = Exercise.find(params[:id])
     @groups = @current_user.groups
-    
+
     if @current_user.valid_exercise? @exercise
       respond_to do |format|
         format.html # show.html.erb
@@ -82,7 +82,7 @@ class ExercisesController < ApplicationController
       format.html # new.html.erb
       format.json { render :json => @exercise }
     end
-    
+
   end
 
   # GET /exercises/1/edit
@@ -135,7 +135,7 @@ class ExercisesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def add_group
     @exercise = Exercise.find(params[:id])
     group = Group.find(params[:group])

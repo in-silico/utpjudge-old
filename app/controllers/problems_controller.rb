@@ -1,11 +1,11 @@
 class ProblemsController < ApplicationController
   before_filter :req_psetter
   before_filter :init_vars
-  
+
   def init_vars
-    @user = current_user    
+    @user = current_user
   end
-  
+
   # GET /problems
   # GET /problems.json
   def index
@@ -31,7 +31,6 @@ class ProblemsController < ApplicationController
   # GET /problems/new.json
   def new
     @problem = Problem.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @problem }
@@ -47,9 +46,9 @@ class ProblemsController < ApplicationController
   # POST /problems.json
   def create
     @problem = Problem.new(params[:problem])
-
+    puts "\n\n\n\n\n ***********" +  @problem.chlang + "\n\n\n\n\n ***********"
     respond_to do |format|
-      if @problem.save        
+      if @problem.save
         flash[:class] = "alert alert-success"
         format.html { redirect_to @problem, :notice => 'Problem was successfully created.' }
         format.json { render :json => @problem, :status => :created, :location => @problem }

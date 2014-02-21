@@ -4,7 +4,9 @@ class CreateProblems < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.text :notes
+      t.text :chlang
       t.has_attached_file :pdescription
+      t.has_attached_file :checker
 
       t.timestamps
     end
