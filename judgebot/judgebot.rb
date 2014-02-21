@@ -63,6 +63,7 @@ class SJudge
 
     write_to_file "#{base_path}/#{tc_id}.in",tc[0]
     write_to_file "#{base_path}/#{tc_id}.out",tc[1]
+
     write_to_file "#{base_path}/#{@nameChecker}",@sourceChecker
 
     type = @language["ltype"]

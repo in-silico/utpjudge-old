@@ -257,8 +257,6 @@ else
           echo -n "YES";
         elif [ $ANS == 1 ]; then
           echo -n "NO - Presentation error";
-        elif [ $ANS == 2 ]; then
-          echo -n "NO - Wrong answer";
         else
           echo -n "NO - Wrong answer";
         fi

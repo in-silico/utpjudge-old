@@ -46,7 +46,7 @@ class ProblemsController < ApplicationController
   # POST /problems.json
   def create
     @problem = Problem.new(params[:problem])
-    puts "\n\n\n\n\n ***********" +  @problem.chlang + "\n\n\n\n\n ***********"
+
     respond_to do |format|
       if @problem.save
         flash[:class] = "alert alert-success"

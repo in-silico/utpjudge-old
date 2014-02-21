@@ -52,7 +52,7 @@ class SubmissionsController < ApplicationController
       @lang = @submission.language
       tmp = File.open('protected/checkers/' + @submission.exercise_problem.problem.checker.url.split('?')[0], 'r')
       @checker = tmp.read
-      @chlang  = @submission.exercise_problem.problem.chlang
+      @chlang  = @submission.exercise_problem.problem.checker.url.split('?')[0].split('.')[-1]
       respond_to do |format|
           format.json { render json: [@submission,@srccode,@lang,@submission.exercise_problem, @checker, @chlang] }
       end

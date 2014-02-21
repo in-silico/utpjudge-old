@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(:version => 20130423212638) do
     t.string   "name"
     t.text     "description"
     t.text     "notes"
-    t.text     "chlang"
     t.string   "pdescription_file_name"
     t.string   "pdescription_content_type"
     t.integer  "pdescription_file_size"

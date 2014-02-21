@@ -2,7 +2,7 @@
   <div class="control-group">
     <%= f.label :stype, :class => 'control-label' %>
     <div class="controls">
-      <%= f.select :stype, Testcase.judgeTypes %>
+      <%= f.select :stype, Testcase.judgeTypes, :selected => Testcase.judgeTypes[1]%>
     </div>
   </div>
   <div class="control-group">

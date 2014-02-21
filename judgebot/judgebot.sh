@@ -72,7 +72,7 @@ case $1 in
   stop)
     kill_process;
   ;;
-  
+
   status)
     status_process;
   ;;
