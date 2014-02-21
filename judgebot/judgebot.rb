@@ -31,13 +31,13 @@ class SJudge
     @log = "judgebot.log"
     %x{echo "#{@base_uri}\n" >> #{@log}}
   end
-  
+
   def write_to_file(fname,str)
     file = File.open("#{fname}","w")
     file.write(str)
     file.close
   end
-  
+
   def judge
     base_name = "runs" + @submission["id"].to_s
     base_path = @folder + "/" + base_name
@@ -47,20 +47,24 @@ class SJudge
     %x{#{"mkdir #{base_path}"}}
     %x{#{"chmod 777 -R #{base_path}"}}
 
+    %x{echo " #{base_path} " >> #{@log}}
+    %x{echo " #{@src_code} " >> #{@log}}
+
     write_to_file(base_path + "/" + srcname,@src_code)
 
     sub_id = @submission["id"]
     tc_id = @submission["testcase_id"]
-    
+
     if !(@testcases.has_key? tc_id)
       @testcases[tc_id] = tc = SConsumer.new(@user,@pass).get("#{@base_uri}/submissions/#{sub_id}/bot_testcase.json")
     else
       tc = @testcases[tc_id]
-      #puts tc
     end
+
     write_to_file "#{base_path}/#{tc_id}.in",tc[0]
     write_to_file "#{base_path}/#{tc_id}.out",tc[1]
-    
+    write_to_file "#{base_path}/#{@nameChecker}",@sourceChecker
+
     type = @language["ltype"]
     comp = @language["compilation"]
     exec = @language["execution"]
@@ -69,7 +73,7 @@ class SJudge
     meml = @ex_pr["mem_lim"]
     comp = comp.gsub("SOURCE","Main")
     exec = exec.gsub("SOURCE","Main").gsub("-tTL","-t"+timl.to_s).gsub("ML",meml.to_s).gsub("INFILE","Main.in").gsub("SRUN","safeexec")
-    command = "./sjudge.sh '#{srcname}' '#{tc_id}.in' '#{tc_id}.out' #{type} '#{comp}' '#{exec}' #{timl} #{meml} #{progl} #{sub_id}"
+    command = "./sjudge.sh '#{srcname}' '#{tc_id}.in' '#{tc_id}.out' #{type} '#{comp}' '#{exec}' #{timl} #{meml} #{progl} #{sub_id} #{@nameChecker}"
 
     s = %x{#{command}}.split(',')
     ans = sub_id.to_s + "," + s[0].to_s + "," + s[1].to_s
@@ -83,7 +87,10 @@ class SJudge
     @src_code = response[1]
     @language = response[2]
     @ex_pr = response[3]
-    judge  
+    @sourceChecker = response[4]
+    @extChecker = response[5]
+    @nameChecker = 'checker.' + @extChecker
+    judge
   end
 
   def run_server()
@@ -94,7 +101,7 @@ class SJudge
 
         begin
           subms = SConsumer.new(@user,@pass).get(s)
-          
+
           for s in subms
             %x{echo "Judging submission id=#{s}" >> #{@log}}
             v = process_subm(s.to_i)
@@ -110,7 +117,7 @@ class SJudge
           %x{echo "`date` \n\t (#{$0}) - #{e.message}\n" >> #{@log}}
           sleep @time
           false
-        end        
+        end
       }
   end
 

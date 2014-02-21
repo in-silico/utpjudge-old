@@ -48,6 +48,7 @@ EXECUTION=$6
 TL=$7
 ML=$8
 PL=$9
+CHECKER=$10
 RTL=30
 # Max number of child process
 CP=0
@@ -174,14 +175,14 @@ if [ "$TYPE" == "1" ]; then
 #cd $PRUN
 #$EXECUTION
 #echo \$? > run.retcode
-#sudo /bin/umount /proc 
-#sudo /bin/umount /sys 
+#sudo /bin/umount /proc
+#sudo /bin/umount /sys
 #EOF
 
     ## chmod 755 $PRUNNING/run.sh
     #chroot /$basename $PRUN/run.sh
     ## schroot -c $basename -p $PRUN/run.sh
-    
+
 
     ##if [ $? != 0 ]; then
     ##  cat run.retcode | echo;
@@ -197,7 +198,7 @@ if [ "$TYPE" == "1" ]; then
 elif [ "$TYPE" == "2" ]; then
   echo "Copying and rename '$SOURCE' to 'Main.$ext' in $frun" >> $slog;
   cp $SOURCE Main.$ext 2>> $slog
-  
+
   echo "Copying $INFILE and rename in $frun" >> $slog;
   cp $INFILE Main.in 2>>$slog
   chmod 744 Main.in
@@ -212,26 +213,13 @@ elif [ "$TYPE" == "2" ]; then
   echo "Executing .." >> $slog;
   echo "Command: $EXECUTION" >> $slog;
   eval $EXECUTION &>> $slog;
-  echo $? > run.retcode 
+  echo $? > run.retcode
   chmod 700 run.retcode
 fi;
 
 ret=`cat run.retcode`
 
-if [ "$ret" == "0" ]; then
-  # This presentation error only checks white spaces and newlines
-  DIFF=`diff -wB correct.OUT Main.OUT`
-  if [ $? == 0 ]; then
-    DIFF2=`diff correct.OUT Main.OUT`
-    if [ $? == 0 ]; then
-      echo -n "YES";
-    else
-      echo -n "NO - Presentation error";
-    fi
-  else
-    echo -n "NO - Wrong answer";
-  fi
-elif [ "$ret" == "1" ]; then
+if [ "$ret" == "1" ]; then
   echo -n "NO - Compile error";
 elif [ "$ret" == "2" -o "$ret" == "9" -o "$ret" == "11" ]; then
   echo -n "NO - Runtime error";
@@ -242,21 +230,47 @@ elif [ "$ret" == "7" ]; then
 elif [ "$TYPE" == "2" -a -s Main.ERR ]; then echo -n "NO - Runtime Error";
 else
   [ -s Main.OUT ]
-  if [ $? == 0 ]; then
-    DIFF=`diff -wB correct.OUT Main.OUT`
     if [ $? == 0 ]; then
-      DIFF2=`diff correct.OUT Main.OUT`
+       # compile checker if is necessary
+      arr=(${CHECKER//./ })
+#      chExt=${arr[1]}
+      chExt=cpp
+      echo "**$chExt**" >> $slog;
+
+      if [ $chExt == "cpp" ]; then
+        echo "*$CHECKER*" >> $slog;
+#        g++ $CHECKER -o checker
+        g++ checker.cpp -o checker
+      elif [ $chExt == "java" ]; then
+        javac -d . $CHECKER
+      fi
+
+      echo "$?" >> $slog;
+
       if [ $? == 0 ]; then
-        echo -n "YES";
-      else
-        echo -n "NO - Presentation error";
+        ANS=-1
+        if [ $chExt == "cpp" ]; then
+          ANS=`./checker Main.OUT correct.OUT Main.IN`
+        elif [ $chExt == "java" ]; then
+          ANS=`/usr/bin/java checker Main.OUT correct.OUT Main.IN`
+        elif [ $chExt == "py" ]; then
+          ANS=`/usr/bin/python checker.py Main.OUT correct.OUT Main.IN`
+        fi
+
+        if [ $ANS == 0 ]; then
+          echo -n "YES";
+        elif [ $ANS == 1 ]; then
+          echo -n "NO - Presentation error";
+        elif [ $ANS == 2 ]; then
+          echo -n "NO - Wrong answer";
+        else
+          echo -n "NO - Wrong answer";
+        fi
+
       fi
     else
-      echo -n "NO - Wrong answer";
+      echo -n "No Answer";
     fi
-  
-  else echo -n "NO - Wrong answer";
-  fi
 fi;
 
 # Running time
