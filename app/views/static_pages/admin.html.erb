@@ -24,4 +24,8 @@
     <a class="active" href="/groups"> <h4>groups</h4> </a>
   <% end %>
 
+  <% if @user.has_roles( User.roles[:root]) %>
+    <a class="active" href="/languages"> <h4>Languages</h4> </a>
+  <% end %>
+
 </ul>
