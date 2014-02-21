@@ -47,8 +47,8 @@ class SJudge
     %x{#{"mkdir #{base_path}"}}
     %x{#{"chmod 777 -R #{base_path}"}}
 
-    %x{echo " #{base_path} " >> #{@log}}
-    %x{echo " #{@src_code} " >> #{@log}}
+    #%x{echo " #{base_path} " >> #{@log}}
+    #%x{echo " #{@src_code} " >> #{@log}}
 
     write_to_file(base_path + "/" + srcname,@src_code)
 

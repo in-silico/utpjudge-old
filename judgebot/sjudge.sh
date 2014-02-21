@@ -48,7 +48,7 @@ EXECUTION=$6
 TL=$7
 ML=$8
 PL=$9
-CHECKER=$10
+CHECKER=${11}
 RTL=30
 # Max number of child process
 CP=0
@@ -233,29 +233,25 @@ else
     if [ $? == 0 ]; then
        # compile checker if is necessary
       arr=(${CHECKER//./ })
-#      chExt=${arr[1]}
-      chExt=cpp
-      echo "**$chExt**" >> $slog;
+      chExt=${arr[1]}
 
-      if [ $chExt == "cpp" ]; then
-        echo "*$CHECKER*" >> $slog;
-#        g++ $CHECKER -o checker
-        g++ checker.cpp -o checker
-      elif [ $chExt == "java" ]; then
-        javac -d . $CHECKER
+      if [ "$chExt" == "cpp" ]; then
+        `g++ $CHECKER -o checker`
+      elif [ "$chExt" == "java" ]; then
+        `javac -d . $CHECKER`
       fi
-
-      echo "$?" >> $slog;
 
       if [ $? == 0 ]; then
         ANS=-1
-        if [ $chExt == "cpp" ]; then
-          ANS=`./checker Main.OUT correct.OUT Main.IN`
-        elif [ $chExt == "java" ]; then
-          ANS=`/usr/bin/java checker Main.OUT correct.OUT Main.IN`
-        elif [ $chExt == "py" ]; then
-          ANS=`/usr/bin/python checker.py Main.OUT correct.OUT Main.IN`
+        if [ "$chExt" == "cpp" ]; then
+          `./checker Main.OUT correct.OUT Main.IN`
+        elif [ "$chExt" == "java" ]; then
+          `/usr/bin/java checker Main.OUT correct.OUT Main.IN`
+        elif [ "$chExt" == "py" ]; then
+          `/usr/bin/python checker.py Main.OUT correct.OUT Main.IN`
         fi
+
+        ANS=$?
 
         if [ $ANS == 0 ]; then
           echo -n "YES";
