@@ -10,8 +10,6 @@ class Problem < ActiveRecord::Base
   validates_attachment_presence :checker
   validates_attachment_size :pdescription, :less_than => 2.megabytes
   validates_attachment_size :checker, :less_than => 2.megabytes
-  validates_attachment_content_type :checker, :content_type => /\A*/
-  validates_attachment_content_type :pdescription, :content_type => /\A*/
 
   has_many :exercise_problems ,  :dependent => :destroy
   has_many :exercises, :through=>:exercise_problems

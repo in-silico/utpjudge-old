@@ -12,8 +12,8 @@ class Submission < ActiveRecord::Base
   #validates_attachment_presence :src_file
   validates_attachment_size :srcfile, :less_than => 1.megabytes
   validates_attachment_size :outfile, :less_than => 20.megabytes
-  validates_attachment_content_type :srcfile, :content_type => /\A*/
-  validates_attachment_content_type :outfile, :content_type => /\A*/
+  #validates_attachment_content_type :srcfile, :content_type => /\A/
+  #validates_attachment_content_type :outfile, :content_type => /\A/
 
   def self.newJudgeDownload(exercise_problem)
     s = Submission.new
