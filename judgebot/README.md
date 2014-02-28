@@ -10,6 +10,9 @@
 - `files` Folder to runs
 - `sjudge.sh` Judge
 
+### Security
+  The file ***data*** is very important. The owner must be root with permissions ***600***
+
 ### Usage
 
   ./judgebot.sh (start|stop|status)
