@@ -138,13 +138,19 @@ class SubmissionsController < ApplicationController
   end
 
   def jupload
-    #@submission = Submission.find(params[:id])
     @exercise_problem = ExerciseProblem.find(params[:exercise_problem_id])
     @submission = Submission.newJudgeSource(@exercise_problem)
     @submission.language = Language.find(params[:language_id])
     @submission.end_date = Time.now.to_s(:db)
     @submission.user = current_user
     @submission.save
+
+    srcpaste = params[:srcpaste];
+    if( srcpaste.length > 0 )
+      file = File.open("protected/submissions/s#{@submission.exercise_problem.problem.name[0]}#{@submission.id}.cpp","w")
+      file.write(srcpaste)
+      file.close
+    end
 
     respond_to do |format|
       if @submission.update_attributes(params[:submission]) && @submission.judge
