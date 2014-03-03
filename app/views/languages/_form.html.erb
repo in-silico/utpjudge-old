@@ -20,6 +20,10 @@
     <%= f.select :ltype, [['Compiled',1],['Interpreted',2]] %>
   </div>
   <div class="field">
+    <%= f.label :extension %><br />
+    <%= f.text_field :extension %>
+  </div>
+  <div class="field">
     <%= f.label :compilation %><br />
     <%= f.text_field :compilation %>
   </div>

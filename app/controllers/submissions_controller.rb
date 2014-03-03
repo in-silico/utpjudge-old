@@ -145,11 +145,16 @@ class SubmissionsController < ApplicationController
     @submission.user = current_user
     @submission.save
 
-    srcpaste = params[:srcpaste];
-    if( srcpaste.length > 0 )
-      file = File.open("protected/submissions/s#{@submission.exercise_problem.problem.name[0]}#{@submission.id}.cpp","w")
-      file.write(srcpaste)
-      file.close
+    if( params[:srcfile] == nil )
+      srcpaste = params[:srcpaste];
+      if( srcpaste.length > 0 )
+        fname = "/tmp/#{@submission.exercise_problem.problem.name[0]}.#{@submission.language.extension}"
+        f = File.open(fname,'w')
+        f.write(srcpaste)
+        f.close
+        @submission.srcfile = File.open(fname,'r')
+        @submission.save
+      end
     end
 
     respond_to do |format|
