@@ -23,17 +23,17 @@ UTP judge is an online judge created by In-silico for programming assignments an
 4 - Base configuration
 
     $ cd utpjudge/
-    # ./config.sh  
+    # ./config.sh
     # rm Gemfile.lock
     # bundle install
 
-5 - Capistrano 
- 
+5 - Capistrano
+
 Modify the file ./config/deploy.rb to specific configuration, by default the app will be to: /var/www/apps/YOUR-SITE (Make sure that provide the necesary permissions to the user -Non root user-).
 
     $ bundle exec cap deploy:setup
     $ bundle exec cap deploy:check
-    $ bundle exec cap deploy 
+    $ bundle exec cap deploy
     $ bundle exec cap deploy:migrate
     $ bundle exec cap deploy:seed
 
@@ -41,7 +41,7 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
 
 6.1 Install apache
 
-     # gem install passenger 
+     # gem install passenger
      # passenger-install-apache2-module
 
 6.2 Configuration
@@ -49,13 +49,13 @@ Modify the file ./config/deploy.rb to specific configuration, by default the app
 When the previous step is completed, you will obtain a message like this:
 
    >> LoadModule passenger_module /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
-   
+
    >> PassengerRoot /usr/lib/ruby/gems/1.8/gems/passenger-2.2.2
-   
+
    >> PassengerRuby /usr/bin/ruby1.8
-  
+
 These lines must be added to file "/etc/apache2/apache2.conf"
-     
+
 6.2.1 Enable the  mod_rewrite for apache
 
     # a2enmod rewrite
@@ -88,3 +88,20 @@ Example.
     # service apache2 restart
 
 7 - Upload the problems
+
+
+## Config DB
+
+
+1. Install postgress
+
+    # aptitude install postgresql libpq-dev
+
+2. Create user.
+
+    $ sudo -u postgres psql
+    postgres#= CREATE USER _utpjudge WITH PASSWORD 'supersecret';
+    postgres#= ALTER ROLE _utpjudge LOGIN;
+    postgres#= ALTER ROLE _utpjudge CREATEDB;
+
+
