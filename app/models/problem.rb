@@ -5,7 +5,7 @@ class Problem < ActiveRecord::Base
   validates_presence_of :name
 
 
-  has_attached_file :pdescription, :path => ":rails_root/protected/problems/:basename:id.:extension", :url => ":basename:id.:extension"
+  has_attached_file :pdescription, :path => ":rails_root/protected/problems/:basename:id.:extension", :default_url => 'ndesc.pdf'
   has_attached_file :checker, :path => ':rails_root/protected/checkers/:basename:id.:extension' , :default_url => 'checker.cpp'
   validates_attachment_size :pdescription, :less_than => 2.megabytes
   validates_attachment_size :checker, :less_than => 2.megabytes

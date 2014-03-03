@@ -4,7 +4,7 @@ Judge::Application.routes.draw do
   resources :groups
 
   root :to => "static_pages#home"
-  
+
   resources :submissions do
       collection do
           get :downloadInput
@@ -18,19 +18,19 @@ Judge::Application.routes.draw do
         put :jdownload
       end
   end
-  
+
   resources :users do
     collection do
       post :sign_in
       get :sign_out
     end
   end
-    
+
   resources :problems do
       resources :testcases do
       end
   end
-  
+
   match 'listexercises' => 'exercises#getvalid'
   match 'listgroups' => 'groups#list_groups'
   match 'admin' => 'static_pages#admin'
@@ -48,20 +48,20 @@ Judge::Application.routes.draw do
         get :rem_group
       end
   end
-  
+
   resources :groups do
       member do
         post :add_user , :add_exer , :add_user_confirm
         get :rem_user , :rem_exer
       end
   end
-  
+
   resources :exercises do
     member do
       post :add_user
     end
   end
-  
+
   resources :users do
       member do
         post :add_group

@@ -3,12 +3,7 @@
   <dd><h2><%= @problem.name %></h2></dd>
   <dd>Time limit: <%= "#{@exercise_problem.time_limit} s" %></dd>
   <dd>Memory limit: <%= "#{@exercise_problem.mem_lim} MBytes" %></dd>
-  <dd>Missing pdf </dd>
-  <!--
-      THIS PART DOES NOT WORKS CORRECTLY
-    <dd><a  href = <%= @problem.pdescription.url %> > PDF description </a> </dd>
-
-  -->
+  <dd><%= link_to 'PDF description', {:controller => 'exercise_problems', :action => 'download', :id => @exercise_problem.id} %> </dd>
   <br />
   <dd><%= raw(@problem.notes) %></dd>
 </dl>
