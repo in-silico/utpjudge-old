@@ -16,6 +16,7 @@ root.roles << roles
 lang = Language.new
 lang.name="C++"
 lang.ltype="1"
+lang.extension="cpp"
 lang.compilation="/usr/bin/g++ -Wall -O2 -static -pipe -o SOURCE SOURCE.cpp"
 lang.execution="SRUN -uCP -F10 -tTL -Ujailu -Gjailg -iINFILE -oSOURCE.OUT -eSOURCE.ERR -n0 -C. -f20000 -d512000 -mML ./SOURCE"
 lang.save
@@ -23,6 +24,7 @@ lang.save
 lang = Language.new
 lang.name="ANSI C"
 lang.ltype="1"
+lang.extension="c"
 lang.compilation="/usr/bin/gcc -lmath -Wall -O2 -static -pipe -o SOURCE SOURCE.c"
 lang.execution="SRUN -uCP -F10 -tTL -Ujailu -Gjailg -iINFILE -oSOURCE.OUT -eSOURCE.ERR -n0 -C. -f20000 -d512000 -mML ./SOURCE"
 lang.save
@@ -30,6 +32,7 @@ lang.save
 lang = Language.new
 lang.name="Java"
 lang.ltype="1"
+lang.extension="java"
 lang.compilation="/usr/bin/javac -d . SOURCE.java"
 lang.execution="SRUN -tTL -TRTL -iINFILE -F256 -u256 -oSOURCE.OUT -eSOURCE.ERR -Ujailu -Gjailg -n0 -C. -f20000 -d1000000 -m1000000 -- /usr/bin/java -Xmx120M -Xms120M SOURCE"
 lang.save
@@ -37,6 +40,7 @@ lang.save
 lang = Language.new
 lang.name="Python"
 lang.ltype="2"
+lang.extension="py"
 lang.compilation=""
 lang.execution="SRUN -uCP -F10 -tTL -Ujailu -Gjailg -iINFILE -oSOURCE.OUT -eSOURCE.ERR -n0 -C. -f20000 -d512000 -mML -- /usr/bin/python SOURCE.py"
 lang.save
