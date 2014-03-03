@@ -17,8 +17,15 @@
     <div class="controls">
 			<%= select_tag :language_id, options_from_collection_for_select(@language,:id,:name) %>
     </div>
-</div>
+  </div>
 
+  <div id="editor"><%= "" %></div>
+  <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/tomorrow_night");
+    editor.getSession().setMode("ace/mode/c_cpp");
+  </script>
 
   <div class="control-group">
       <%= f.label :srcfile, :class=>'control-label' %>
@@ -26,6 +33,8 @@
           <%= f.file_field :srcfile %>
       </div>
   </div>
+
+  <%= hidden_field_tag(:srcpaste) %>
 
   <div class="actions">
       <%= f.submit :class => 'btn btn-success', :value => 'Submit solution' %>
@@ -35,14 +44,16 @@
 
 <script language="jscript">
     function filled(str) {
-        return str!=null && str!="";
+      return str!=null && str!="";
     }
 
     function validate_form() {
-        var srcfile = document.getElementById("submission_srcfile");
-        var outfile = document.getElementById("submission_outfile");
-        var v = filled(srcfile.value);
-        if (!v) alert("The source file must be filled");
-        return v;
+      var srcfile = document.getElementById("submission_srcfile");
+      srcpaste.value = editor.getValue();
+      var v = filled(srcfile.value);
+      var vv = filled(srcpaste.value);
+
+      if (!v && !vv ) alert("The source file must be filled");
+      return v || vv;
     }
 </script>

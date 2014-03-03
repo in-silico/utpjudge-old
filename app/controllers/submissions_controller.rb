@@ -138,13 +138,24 @@ class SubmissionsController < ApplicationController
   end
 
   def jupload
-    #@submission = Submission.find(params[:id])
     @exercise_problem = ExerciseProblem.find(params[:exercise_problem_id])
     @submission = Submission.newJudgeSource(@exercise_problem)
     @submission.language = Language.find(params[:language_id])
     @submission.end_date = Time.now.to_s(:db)
     @submission.user = current_user
     @submission.save
+
+    if( params[:srcfile] == nil )
+      srcpaste = params[:srcpaste];
+      if( srcpaste.length > 0 )
+        fname = "/tmp/#{@submission.exercise_problem.problem.name[0]}.#{@submission.language.extension}"
+        f = File.open(fname,'w')
+        f.write(srcpaste)
+        f.close
+        @submission.srcfile = File.open(fname,'r')
+        @submission.save
+      end
+    end
 
     respond_to do |format|
       if @submission.update_attributes(params[:submission]) && @submission.judge

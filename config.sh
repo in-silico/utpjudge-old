@@ -1,7 +1,7 @@
 #!/bin/bash
-# 
+#
 # This script configure everything necessary to judging
-# 
+#
 
 # Check if running as root
 if [ "`id -u`" != "0" ]; then
@@ -44,7 +44,7 @@ echo "Creating dir: $PATH_BOT/files";
 mkdir $PATH_BOT/files
 chmod 777 $PATH_BOT/files
 echo "Creating fifo: $PATH_BOT/test_fifo";
-mkfifo $PATH_BOT/test_fifo 
+mkfifo $PATH_BOT/test_fifo
 chmod 700 $PATH_BOT/test_fifo
 
 echo "Creating user and group to runs: $basename, g$basename ...";
@@ -59,5 +59,13 @@ if [ $? != 0 ]; then
     exit;
   fi
 fi
+
+echo "Activing firewall .."
+echo "Copying judgefirewall.sh in /etc/init.d/ .."
+cp judgebot/judgefirewall.sh /etc/init.d/
+chmod +x /etc/init.d/judgefirewall.sh
+echo "Initializing firewall.sh .."
+update-rc.d judgefirewall.sh defaults
+service judgefirewall.sh start
 
 echo -e "\tSuccessful installation :P!";
