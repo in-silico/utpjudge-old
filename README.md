@@ -100,8 +100,8 @@ Example.
 2 - Create user.
 
     $ sudo -u postgres psql
-    postgres#= CREATE USER _utpjudge WITH PASSWORD 'supersecret';
-    postgres#= ALTER ROLE _utpjudge LOGIN;
-    postgres#= ALTER ROLE _utpjudge CREATEDB;
+    CREATE USER _utpjudge WITH PASSWORD 'supersecret';
+    ALTER ROLE _utpjudge LOGIN;
+    ALTER ROLE _utpjudge CREATEDB;
 
 
