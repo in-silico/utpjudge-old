@@ -93,14 +93,11 @@ Example.
 ## Config DB
 
 
-1. Install postgress
-
+1 - Install postgress
 
     # aptitude install postgresql libpq-dev
-    
 
-2. Create user.
-
+2 - Create user.
 
     $ sudo -u postgres psql
     postgres#= CREATE USER _utpjudge WITH PASSWORD 'supersecret';
