@@ -12,7 +12,6 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20140303052555) do
-
   create_table "exercise_problems", :force => true do |t|
     t.integer  "problem_number"
     t.integer  "time_limit"
