@@ -2,7 +2,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: blog_development
+  database: utpjudge_development
   pool: 5
   username: _utpjudge
   password: supersecret
@@ -32,7 +32,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: blog_test
+  database: utpjudge_test
   pool: 5
   username: _utpjudge
   password: supersecret
@@ -41,7 +41,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: blog_production
+  database: utpjudge_production
   pool: 5
   username: _utpjudge
   password: supersecret
