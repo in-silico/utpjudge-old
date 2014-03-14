@@ -1,9 +1,10 @@
+
 <h1> <%= @exercise.name %> </h1>
 
 
 <p class = <%= @exercise.time_to_end >= 60 ? "text-success" : "text-error"%> >
-time to start : <%= (@exercise.time_to_start).to_s()  %> minutes  | 
-time to end : <%= (@exercise.time_to_end).to_s()  %> minutes 
+time to start : <%= (@exercise.time_to_start).to_s()  %> minutes  |
+time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
 </p>
 
 <table class = "table table-bordered">
@@ -24,22 +25,22 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
   </tr>
 
   <% @exercise.init_scoreboard %>
-  <% @submissions.each do |s| %>
+  <% @submissions.sort_by {|obj| obj.end_date }.each do |s| %>
    <% @exercise.update_submission(s) %>
   <% end %>
-   
+
   <% @exercise.scoreboard.each_with_index do |user, i| %>
     <tr>
       <td><%= i + 1 %></td>
       <td><%= user[1].name %></td>
       <% @problems.each_with_index do |ex_problem,j| %>
-            
-            <td 
-                <% if @exercise.contestants[user[0]].data[ex_problem.id] %> 
-                                    
+
+            <td
+                <% if @exercise.contestants[user[0]].data[ex_problem.id] %>
+
                   <% if @exercise.contestants[user[0]].data[ex_problem.id].attempts > 0 %>
                     <% if @exercise.contestants[user[0]].data[ex_problem.id].time_solved >= 0 %>
-                      style = "background : #4CC417" 
+                      style = "background : #4CC417"
                     <% else %>
                       style = "background : #f62817"
                     <% end %>
@@ -50,10 +51,10 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
                     <%= @exercise.contestants[user[0]].data[ex_problem.id].time_solved %>
                   <% else %>
                     0
-                  <% end %>                          
+                  <% end %>
                 <% end %>
-             
-             
+
+
           </td>
       <% end %>
       <td><%= user[1].problems_solved %></td>
