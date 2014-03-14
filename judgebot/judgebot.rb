@@ -50,6 +50,10 @@ class SJudge
     #%x{echo " #{base_path} " >> #{@log}}
     #%x{echo " #{@src_code} " >> #{@log}}
 
+    if(srcname == nil)
+      srcname = 'noname'
+    end
+
     write_to_file(base_path + "/" + srcname,@src_code)
 
     sub_id = @submission["id"]
