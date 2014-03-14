@@ -21,7 +21,7 @@
 
   <div id="editor"><%= "" %></div>
   <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-  <script>
+  <script type="text/javascript">
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/tomorrow_night");
     editor.getSession().setMode("ace/mode/c_cpp");
@@ -42,7 +42,7 @@
 
 <% end %>
 
-<script language="jscript">
+<script type="text/javascript">
     function filled(str) {
       return str!=null && str!="";
     }
