@@ -3,6 +3,21 @@ utpjudge
 
 UTP judge is an online judge created by In-silico for programming assignments and ACM-ICPC local training.
 
+
+## Config DB
+
+
+1 - Install postgress
+
+    # aptitude install postgresql libpq-dev
+
+2 - Create user.
+
+    $ sudo -u postgres psql
+    CREATE USER _utpjudge WITH PASSWORD 'supersecret';
+    ALTER ROLE _utpjudge LOGIN;
+    ALTER ROLE _utpjudge CREATEDB;
+
 ## Installation
 
 
@@ -90,18 +105,6 @@ Example.
 7 - Upload the problems
 
 
-## Config DB
 
-
-1 - Install postgress
-
-    # aptitude install postgresql libpq-dev
-
-2 - Create user.
-
-    $ sudo -u postgres psql
-    CREATE USER _utpjudge WITH PASSWORD 'supersecret';
-    ALTER ROLE _utpjudge LOGIN;
-    ALTER ROLE _utpjudge CREATEDB;
 
 
