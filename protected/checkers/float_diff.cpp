@@ -2,7 +2,7 @@ using namespace std;
 #include<bits/stdc++.h>
 
 /**
- * Example Checker for floating points answers.
+ * Example Checker for floating point answers.
  * Params : Contestant.output, official.output, official.input
  * Return :
  *        0 -> Accepted.
