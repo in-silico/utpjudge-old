@@ -32,6 +32,7 @@ gem 'jquery-rails' , '~> 3.1.0'
 gem 'paperclip' , '~> 3.5.4'
 gem 'httparty' , '~> 0.12.0'
 gem 'httmultiparty' , '~> 0.3.10'
+gem 'ransack', '~> 1.2.2'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
