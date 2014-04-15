@@ -41,6 +41,8 @@ time to end : <%= (@exercise.time_to_end).to_s()  %> minutes
                   <% if @exercise.contestants[user[0]].data[ex_problem.id].attempts > 0 %>
                     <% if @exercise.contestants[user[0]].data[ex_problem.id].time_solved >= 0 %>
                       style = "background : #4CC417"
+                    <% elsif @exercise.contestants[user[0]].data[ex_problem.id].last_pending  %>
+                      style = "background :	#C0C0C0"
                     <% else %>
                       style = "background : #f62817"
                     <% end %>
