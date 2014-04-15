@@ -244,11 +244,11 @@ else
       if [ $? == 0 ]; then
         ANS=-1
         if [ "$chExt" == "cpp" ]; then
-          `./checker Main.OUT correct.OUT Main.IN`
+          `./checker Main.OUT correct.OUT Main.in`
         elif [ "$chExt" == "java" ]; then
-          `/usr/bin/java checker Main.OUT correct.OUT Main.IN`
+          `/usr/bin/java checker Main.OUT correct.OUT Main.in`
         elif [ "$chExt" == "py" ]; then
-          `/usr/bin/python checker.py Main.OUT correct.OUT Main.IN`
+          `/usr/bin/python checker.py Main.OUT correct.OUT Main.in`
         fi
 
         ANS=$?

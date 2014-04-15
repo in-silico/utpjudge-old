@@ -50,9 +50,16 @@ class SubmissionsController < ApplicationController
       @submission = Submission.find(params[:id])
       @srccode = @submission.source
       @lang = @submission.language
-      tmp = File.open('protected/checkers/' + @submission.exercise_problem.problem.checker.url.split('?')[0], 'r')
+      fname = @submission.exercise_problem.problem.checker.path
+
+      if( fname == nil )
+          fname = "protected/checkers/checker.cpp"
+      end
+
+      tmp = File.open(fname,'r')
       @checker = tmp.read
-      @chlang  = @submission.exercise_problem.problem.checker.url.split('?')[0].split('.')[-1]
+      @chlang  = fname.split('.')[-1]
+
       respond_to do |format|
           format.json { render json: [@submission,@srccode,@lang,@submission.exercise_problem, @checker, @chlang] }
       end
