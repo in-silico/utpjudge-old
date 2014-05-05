@@ -42,6 +42,7 @@ class SJudge
     base_name = "runs" + @submission["id"].to_s
     base_path = @folder + "/" + base_name
     srcname = @submission["srcfile_file_name"]
+    srcname = srcname.gsub(/[^a-zA-Z0-9\-.]/,"")
 
     %x{#{"rm -rf #{base_path}"}}
     %x{#{"mkdir #{base_path}"}}
