@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
     return unauthorized_user unless auth
     return true
   end
-  
+
   # GET /groups
   # GET /groups.json
   def index
@@ -19,15 +19,15 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @groups }
+#      format.json { render json: @groups }
     end
   end
-  
+
   def list_groups
     @groups = Group.all
     respond_to do |format|
       format.html # list_groups.html.erb
-      format.json { render json: @groups }
+#      format.json { render json: @groups }
     end
   end
 
@@ -40,7 +40,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @group }
+#      format.json { render json: @group }
     end
   end
 
@@ -51,7 +51,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @group }
+#      format.json { render json: @group }
     end
   end
 
@@ -72,10 +72,10 @@ class GroupsController < ApplicationController
         flash[:class] = "alert alert-success"
         @group.users << @current_user
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render json: @group, status: :created, location: @group }
+#        format.json { render json: @group, status: :created, location: @group }
       else
         format.html { render action: "new" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+#        format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -90,19 +90,19 @@ class GroupsController < ApplicationController
       if @group.update_attributes(params[:group])
         flash[:class] = "alert alert-success"
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-        format.json { head :no_content }
+#        format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
+#        format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
   end
-  
+
   def add_user_confirm
     @group = Group.find(params[:id])
     user = User.find(params[:user])
     pssw = params[:pwd];
-    
+
     if(@group.password == pssw)
       if !@group.users.where(:id => user.id).first
         @group.users << user
@@ -112,10 +112,10 @@ class GroupsController < ApplicationController
       end
     else
         render :text => "The password doesn't match"
-    end 
+    end
 
   end
-  
+
   def add_user
     @group = Group.find(params[:id])
     user = User.find(params[:user])
@@ -125,9 +125,9 @@ class GroupsController < ApplicationController
       redirect_to @group, :notice => 'User was successfully added to this group'
     else
       redirect_to @user, :notice => 'That user is already in this group'
-    end 
+    end
   end
-  
+
   def rem_user
   	@group = Group.find(params[:id])
     user = User.find(params[:user])
@@ -135,7 +135,7 @@ class GroupsController < ApplicationController
     flash[:class] = "alert alert-success"
     redirect_to @group, :notice => 'User was successfully deleted from this group'
   end
-  
+
   def add_exer
     @group = Group.find(params[:id])
     exercise = Exercise.find(params[:exercise])
@@ -143,7 +143,7 @@ class GroupsController < ApplicationController
     flash[:class] = "alert alert-success"
     redirect_to @group, :notice => 'Exercise was successfully added to this group'
   end
-  
+
   def rem_exer
   	@group = Group.find(params[:id])
     exercise = Exercise.find(params[:exercise])
@@ -151,8 +151,8 @@ class GroupsController < ApplicationController
     flash[:class] = "alert alert-success"
     redirect_to @group, :notice => 'Exercise was successfully deleted from this group'
   end
-  
-  
+
+
   # DELETE /groups/1
   # DELETE /groups/1.json
   def destroy
@@ -162,8 +162,8 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to groups_url }
-      format.json { head :no_content }
+#      format.json { head :no_content }
     end
   end
-  
+
 end

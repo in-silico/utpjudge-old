@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
 
-  def req_auth_user    
+  def req_auth_user
     @user = User.find(params[:id])
     if @current_user == @user or @current_user.has_roles([1,2])
       return true
@@ -17,13 +17,13 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  
+
   def index
     @users = User.paginate(:page => params[:page], :per_page => 10).order('created_at DESC')
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @users }
+#      format.json { render :json => @users }
     end
   end
 
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     @groups = Group.all
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @user }
+#      format.json { render :json => @user }
     end
   end
 
@@ -45,9 +45,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @user }
+#      format.json { render :json => @user }
     end
-    #redirect_to :root 
+    #redirect_to :root
   end
 
   # GET /users/1/edit
@@ -57,21 +57,21 @@ class UsersController < ApplicationController
 
   # POST /users
   # POST /users.json
-  def create    
-    @user = User.newMA(params[:user])    
+  def create
+    @user = User.newMA(params[:user])
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id
         flash[:class] = "alert alert-success"
         format.html { redirect_to @user, :notice => 'user was successfully created.' }
-        format.json { render :json => @user, :status => :created, :location => @user }
+#        format.json { render :json => @user, :status => :created, :location => @user }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
+#        format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
-  
+
   #POST /users/sign_in
   def sign_in
     @user = User.authenticate(params[:user])
@@ -83,10 +83,10 @@ class UsersController < ApplicationController
       #flash[:class] = "alert alert-error"
       flash[:notice] = "Login failed. Wrong user name or password"
     end
-    
+
     redirect_to :root
   end
-  
+
   #GET /users/sign_out
   def sign_out
     session[:user_id] = nil
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
       redirect_to @user, :notice => 'This user is already in that group'
     end
   end
-  
+
   def rem_group
     @user = User.find(params[:id])
     group = Group.find(params[:group])
@@ -118,15 +118,15 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    
+
     respond_to do |format|
       if @user.updateMA(params[:user])
         flash[:class] = "alert alert-success"
         format.html { redirect_to @user, :notice => 'user was successfully updated.' }
-        format.json { head :no_content }
+#        format.json { head :no_content }
       else
         format.html { render :action => "edit" }
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
+#        format.json { render :json => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to users_url }
-      format.json { head :no_content }
+#      format.json { head :no_content }
     end
   end
 end
