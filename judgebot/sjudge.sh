@@ -144,10 +144,12 @@ if [ "$TYPE" == "1" ]; then
 
   echo "Copying $INFILE in $frun" >> $slog;
   cp $INFILE Main.in 2>> $slog;
+  rm -rf basename $INFILE
   chmod 744 Main.in
 
   echo "Copying correct outputfile in $frun" >> $slog;
   cp $OUTFILE correct.OUT 2>> $slog;
+  rm -rf basename $OUTFILE
   chmod 700 correct.OUT
 
   #echo "Change directory to $frun" >> $slog;
